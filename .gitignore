@@ -1,1 +1,4 @@
-*build/*
+Engine/build/*
+Engine/install/*
+App/build/*
+App/bin/*

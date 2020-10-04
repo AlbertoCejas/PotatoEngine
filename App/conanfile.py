@@ -3,15 +3,13 @@ from   conans.tools import download, unzip
 import os
 
 class Project(ConanFile):
-    name            = "Potato Engine"
-    description     = "Conan package for Potato Engine."
+    name            = "Potato App"
+    description     = "Conan package for Potato App."
     version         = "0.0.1"                
-    url             = "PROJECT_URL_HERE"
+    url             = "https://github.com/AlbertoCejas/PotatoEngine"
     settings        = "arch", "build_type", "compiler", "os"
     generators      = "cmake"
     requires        = (("doctest/2.3.4@bincrafters/stable"),
-                       ("glfw/3.3.2"),
-                       ("entt/3.5.2"),
                        ("imgui-docking/19-07-2020@ithyx/experimental"))
 
     def imports(self):

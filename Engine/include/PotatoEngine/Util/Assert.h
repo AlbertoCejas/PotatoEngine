@@ -5,7 +5,7 @@
 namespace potato
 {
 	using AssertHandler = void(*)(const char* condition, const char* message, const char* file, int line);
-	void setHandler(AssertHandler assertHandler);
+	POTATO_EXPORT void setHandler(AssertHandler assertHandler);
 
 	static void reportFailure(const char* condition, const char* file, int line, const char* msg, ...);
 }
