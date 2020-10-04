@@ -1,0 +1,3 @@
+{
+	"POTATO_ASSERTS_ENABLED" : ["Debug", "RelWithDebInfo"]
+}

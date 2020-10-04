@@ -1,5 +1,9 @@
 mkdir ..\build
 cd ..\build
-cmake ..
 
-pause
+cmake -DCMAKE_CONFIGURATION_TYPES="Debug;Release;RelWithDebInfo" ..
+cd .. 
+
+cd scripts
+
+pause 

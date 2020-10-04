@@ -7,6 +7,7 @@ set                   (CMAKE_CXX_STANDARD 20)
 
 include               (set_max_warning_level)
 set_max_warning_level ()
+include               (build_type)
 
 ##################################################    Options     ##################################################
 option(BUILD_TESTS "Build tests." OFF)
@@ -55,6 +56,34 @@ endforeach     ()
 foreach        (_LIB ${CONAN_LIBS_RELEASE})
   list         (APPEND PROJECT_LIBRARIES optimized ${_LIB})
 endforeach     ()
+
+############################################    Compile Definitions     ############################################
+include(json_parser)
+file(READ config/defines.json defines_config_file)
+sbeParseJson(define_entries defines_config_file)
+
+# process actual compile defines only
+set(entries_to_skip 0)
+
+foreach(define_entry ${define_entries})
+  # if not an actual compile define, skip
+  if(entries_to_skip GREATER 0)
+    MATH(EXPR entries_to_skip "${entries_to_skip}-1")
+    continue()
+  endif()
+  # for each build type
+  foreach(entry_num ${${define_entry}})
+    # get uppercase buiild type
+    set(uppercase_define_build_type ${${define_entry}_${entry_num}})
+    string(TOUPPER ${uppercase_define_build_type} uppercase_define_build_type)
+    # get compile definition without "define_entries" prefix
+    string(REGEX REPLACE "[^.]*\\." "" final_define_entry ${define_entry})
+    # add compile definition to cxx flags per build type
+    set(CMAKE_CXX_FLAGS_${uppercase_define_build_type} "${CMAKE_CXX_FLAGS_${uppercase_define_build_type}} -D${final_define_entry}")
+    # there will be a non-actual compile define, so skip one
+    MATH(EXPR entries_to_skip "${entries_to_skip}+1")
+  endforeach()
+endforeach()
 
 ##################################################    Targets     ##################################################
 add_executable(${PROJECT_NAME} ${PROJECT_FILES})
