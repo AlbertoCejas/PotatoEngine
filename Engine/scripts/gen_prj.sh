@@ -1,7 +1,6 @@
-mkdir ../build
-cd ../build
-cmake ..
+cd ..
+mkdir build
 
-cd ../scripts
+cmake -S . -B build -DCMAKE_CONFIGURATION_TYPES="Debug;Release;RelWithDebInfo" -DCMAKE_INSTALL_PREFIX=install
 
-pause
+cd scripts

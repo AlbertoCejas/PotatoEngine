@@ -9,10 +9,10 @@
 #  ifndef POTATOENGINE_EXPORT
 #    ifdef PotatoEngine_EXPORTS
         /* We are building this library */
-#      define POTATOENGINE_EXPORT __declspec(dllexport)
+#      define POTATOENGINE_EXPORT 
 #    else
         /* We are using this library */
-#      define POTATOENGINE_EXPORT __declspec(dllimport)
+#      define POTATOENGINE_EXPORT 
 #    endif
 #  endif
 

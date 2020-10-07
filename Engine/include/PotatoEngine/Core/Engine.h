@@ -6,7 +6,7 @@
 
 namespace potato
 {
-	class POTATO_EXPORT Engine
+	class POTATOENGINE_EXPORT Engine
 	{
 	public:
 

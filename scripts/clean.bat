@@ -1,8 +1,8 @@
 cd ..\Engine\scripts\
-clean_prj.bat
+call clean_all.bat
 cd ..\..\scripts\
 cd ..\App\scripts\
-clean_prj.bat
+call clean_all.bat
 cd ..\..\scripts\
 
 pause

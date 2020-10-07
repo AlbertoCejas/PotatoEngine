@@ -12,7 +12,7 @@ set_max_warning_level ()
 include               (build_type)
 
 ##################################################    Options     ##################################################
-option(BUILD_SHARED_LIBS "Build shared (dynamic) libraries." ON)
+option(BUILD_SHARED_LIBS "Build shared (dynamic) libraries." OFF)
 option(BUILD_TESTS "Build tests." OFF)
 
 ##################################################    Sources     ##################################################
@@ -20,7 +20,7 @@ file(GLOB_RECURSE PROJECT_HEADERS include/*.h include/*.hpp)
 file(GLOB_RECURSE PROJECT_SOURCES source/*.c source/*.cpp)
 file(GLOB_RECURSE PROJECT_CMAKE_UTILS cmake/*.cmake)
 file(GLOB_RECURSE PROJECT_MISC *.md *.txt)
-set (PROJECT_EXPORT_HPP include/${PROJECT_NAME}/export.hpp)
+set (PROJECT_EXPORT_HPP include/${PROJECT_NAME}/Export.h)
 set (PROJECT_FILES 
   ${PROJECT_HEADERS} 
   ${PROJECT_SOURCES} 
@@ -111,7 +111,7 @@ endif()
 include               (GenerateExportHeader)
 string                (TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
 generate_export_header(${PROJECT_NAME} 
-  EXPORT_FILE_NAME     ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/export.hpp
+  EXPORT_FILE_NAME     ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/Export.h
   EXPORT_MACRO_NAME    ${PROJECT_NAME_UPPER}_EXPORT
   STATIC_DEFINE        ${PROJECT_NAME_UPPER}_STATIC
 )

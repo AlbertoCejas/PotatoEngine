@@ -13,7 +13,7 @@ class Project(ConanFile):
                        ("glfw/3.3.2"),
                        ("entt/3.5.2"))
     options         = {"shared": [True, False]} 
-    default_options = "shared=True"
+    default_options = "shared=False"
 
     def imports(self):
        self.copy("*.dylib*", dst="", src="lib")
