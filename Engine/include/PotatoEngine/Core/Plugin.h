@@ -26,6 +26,6 @@ namespace potato
 	private:
 
 		std::string m_name;
-		int8_t m_priority;
+		const int8_t m_priority;
 	};
 }
