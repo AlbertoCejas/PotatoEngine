@@ -24,23 +24,13 @@ jobs:
        ./install_dependencies.sh
        ./install_conan.sh
 
-    - name: Configure and Build Engine CMake
+    - name: Configure and Build Potato CMake
       shell: bash
       env:
         CC:   gcc-9
         CXX:  g++-9
       run: |
-        cd Engine/scripts
-        ./gen_prj.sh
-        ./make_release.sh
-
-    - name: Configure and Build App CMake
-      shell: bash
-      env:
-        CC:   gcc-9
-        CXX:  g++-9
-      run: |
-        cd App/scripts
+        cd scripts
         ./gen_prj.sh
         ./make_release.sh
 

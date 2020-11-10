@@ -2,14 +2,15 @@
 
 #include <PotatoEngine/Collections/SortedVector.h>
 #include <PotatoEngine/Core/Plugin.h>
+#include <PotatoEngine/Export.h>
 
 namespace potato
 {
 	class Plugin;
 
-	struct PluginPriorityComparator
+	struct POTATOENGINE_EXPORT PluginPriorityComparator
 	{
-		bool operator() (const Plugin* lhs, const Plugin* rhs) const
+		bool operator() (const Plugin* const lhs, const Plugin* const rhs) const
 		{
 			return lhs->getPriority() < rhs->getPriority();
 		}
@@ -20,7 +21,9 @@ namespace potato
 	public:
 
 		void init() {}
-		void cleanup() {}
+		void shutdown() {}
+
+		void update();
 
 		void addPlugin(Plugin& plugin);
 		void removePlugin(Plugin& plugin);

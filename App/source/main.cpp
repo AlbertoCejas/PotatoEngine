@@ -1,14 +1,17 @@
-#include <PotatoEngine/Core/Plugin.h>
+#include <PotatoApp/PotatoApp.h>
 #include <iostream>
 
 
 int main(int argc, char** argv)
 {
-	potato::Plugin plugin("test", 1);
+	PotatoApp app("PotatoApp");
 
-	const char* name = plugin.getName();
+	app.init();
 
-	std::cout << "Plugin name: " << name << std::endl;
+	while (app.isShuttingDown() == false)
+	{
+		app.update();
+	}
 
 	return 0;
 }

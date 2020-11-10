@@ -9,6 +9,24 @@ include               (set_max_warning_level)
 set_max_warning_level ()
 include               (build_type)
 
+# This include defines standard install locations.
+# https://cmake.org/cmake/help/v3.11/module/GNUInstallDirs.html
+include(GNUInstallDirs)
+
+# If no build type was specified, set it to Release.
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING
+            "Choose the type of build, options are: None Debug Release RelWithDebInfo."
+            FORCE)
+endif(NOT CMAKE_BUILD_TYPE)
+
+# If no installation prefix is given manually, install locally.
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE STRING
+            "The install location"
+            FORCE)
+endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+
 ##################################################    Options     ##################################################
 option(BUILD_TESTS "Build tests." OFF)
 
@@ -48,7 +66,7 @@ add_conan_remote(conan-community https://api.bintray.com/conan/conan-community/c
 # - You may also set the PROJECT_INCLUDE_DIRS and PROJECT_LIBRARIES instead of using import_library.
 
 # Potato Engine
-find_package  (PotatoEngine REQUIRED CONFIG)
+find_package(PotatoEngine CONFIG REQUIRED)
 
 conan_cmake_run(CONANFILE conanfile.py BASIC_SETUP BUILD missing)
 list           (APPEND PROJECT_INCLUDE_DIRS ${CONAN_INCLUDE_DIRS_RELEASE})

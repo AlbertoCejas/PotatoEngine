@@ -1,5 +1,6 @@
 #pragma once
 
+#include <PotatoEngine/Export.h>
 #include <PotatoEngine/Util/Macros.h>
 
 namespace potato

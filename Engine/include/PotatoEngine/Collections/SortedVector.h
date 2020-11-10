@@ -3,11 +3,13 @@
 #include <vector>
 #include <algorithm>
 
+#include <PotatoEngine/Export.h>
+
 namespace potato
 {
 
 	template <typename T, typename Predicate = std::less<T>>
-	class SortedVector
+	class POTATOENGINE_EXPORT SortedVector
 	{
 		public:
 

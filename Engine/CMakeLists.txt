@@ -11,6 +11,28 @@ include               (set_max_warning_level)
 set_max_warning_level ()
 include               (build_type)
 
+# This include defines standard install locations.
+# https://cmake.org/cmake/help/v3.11/module/GNUInstallDirs.html
+include(GNUInstallDirs)
+
+# This include provides some helper functions that simplify packaging.
+# https://cmake.org/cmake/help/v3.11/module/CMakePackageConfigHelpers.html
+include(CMakePackageConfigHelpers)
+
+# If no build type was specified, set it to Release.
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING
+            "Choose the type of build, options are: None Debug Release RelWithDebInfo."
+            FORCE)
+endif(NOT CMAKE_BUILD_TYPE)
+
+# If no installation prefix is given manually, install locally.
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE STRING
+            "The install location"
+            FORCE)
+endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+
 ##################################################    Options     ##################################################
 option(BUILD_SHARED_LIBS "Build shared (dynamic) libraries." OFF)
 option(BUILD_TESTS "Build tests." OFF)
@@ -91,8 +113,26 @@ foreach(define_entry ${define_entries})
   endforeach()
 endforeach()
 
+###########################################    Platform Definitions     ############################################
+
+set(PLATFORM_WINDOWS FALSE CACHE INTERNAL "")
+set(PLATFORM_LINUX FALSE CACHE INTERNAL "")
+
+if(WIN32)
+  set(PLATFORM_WIN32 TRUE CACHE INTERNAL "Target platform: Win32") #WIN32 is a variable, so we cannot use string "WIN32"
+  message("Target platform: Win32. SDK Version: " ${CMAKE_SYSTEM_VERSION})
+  list(APPEND PROJECT_COMPILE_DEFINITIONS PLATFORM_WIN32=1)
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+  set(PLATFORM_LINUX TRUE CACHE INTERNAL "Target platform: Linux")
+  message("Target Platform: Linux")
+  list(APPEND PROJECT_COMPILE_DEFINITIONS PLATFORM_LINUX=1)
+else()
+        message(FATAL_ERROR "Unsupported platform")
+endif()
+
 ##################################################    Targets     ##################################################
 add_library(${PROJECT_NAME} ${PROJECT_FILES})
+add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME} PUBLIC 
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
@@ -138,6 +178,14 @@ if(BUILD_TESTS)
 endif()
 
 ##################################################  Installation  ##################################################
+# Define the configuration file locations.
+set(INSTALL_RUNTIME_DIR ${CMAKE_INSTALL_BINDIR})
+set(INSTALL_CONFIG_DIR  ${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME}/cmake)
+set(PROJECT_CONFIG_FILE         "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake")
+configure_package_config_file(cmake/${PROJECT_NAME}-config.cmake.in
+        ${PROJECT_CONFIG_FILE}
+        INSTALL_DESTINATION ${INSTALL_CONFIG_DIR})
+
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}-config
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
