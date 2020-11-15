@@ -34,47 +34,8 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
             FORCE)
 endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
-##################################################    Options     ##################################################
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT PotatoApp)
 
-##################################################  Dependencies  ##################################################
-
-############################################    Compile Definitions     ############################################
-
-###########################################    Platform Definitions     ############################################
-
-##################################################    Targets     ##################################################
-
-##################################################    Sources     ##################################################
-
-# file(MAKE_DIRECTORY build/Engine)
-
-# execute_process(
-#     COMMAND ${CMAKE_COMMAND} -S Engine/. -B build/Engine -DCMAKE_INSTALL_PREFIX=build/Engine/install
-# )
-
-# execute_process(
-#     COMMAND ${CMAKE_COMMAND} --build build/Engine --config Release --target install
-# )
-
-# file(MAKE_DIRECTORY build/App)
-
-# execute_process(
-#     COMMAND ${CMAKE_COMMAND} -S App/. -B build/App -DCMAKE_INSTALL_PREFIX=build/App/install -DCMAKE_PREFIX_PATH=../build/Engine/install/
-# )
-
-# execute_process(
-#     COMMAND ${CMAKE_COMMAND} --build build/App --config Release --target install
-# )
-
 add_subdirectory(Engine)
-list(APPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/build/Engine)
-set (CMAKE_INSTALL_PREFIX "App/")
 add_subdirectory(App)
-
-##################################################    Postbuild   ##################################################
-
-##################################################    Testing     ##################################################
-
-##################################################  Installation  ##################################################

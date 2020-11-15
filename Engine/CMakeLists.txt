@@ -181,15 +181,22 @@ endif()
 # Define the configuration file locations.
 set(INSTALL_RUNTIME_DIR ${CMAKE_INSTALL_BINDIR})
 set(INSTALL_CONFIG_DIR  ${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME}/cmake)
-set(PROJECT_CONFIG_FILE         "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake")
-configure_package_config_file(cmake/${PROJECT_NAME}-config.cmake.in
+set(INSTALL_LIBRARY_DIR ${CMAKE_INSTALL_LIBDIR})
+set(INSTALL_ARCHIVE_DIR ${CMAKE_INSTALL_LIBDIR})
+set(PROJECT_CONFIG_FILE         "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake")
+
+configure_package_config_file(cmake/${PROJECT_NAME}Config.cmake.in
         ${PROJECT_CONFIG_FILE}
         INSTALL_DESTINATION ${INSTALL_CONFIG_DIR})
 
-install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}-config
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
+install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}Config
+  ARCHIVE DESTINATION ${INSTALL_ARCHIVE_DIR}
+  LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}
+  RUNTIME DESTINATION ${INSTALL_RUNTIME_DIR})
 install(DIRECTORY include/ DESTINATION include)
-install(EXPORT  ${PROJECT_NAME}-config DESTINATION cmake)
-export (TARGETS ${PROJECT_NAME}        FILE        ${PROJECT_NAME}-config.cmake)
+install(EXPORT  ${PROJECT_NAME}Config DESTINATION ${INSTALL_CONFIG_DIR})
+export (TARGETS ${PROJECT_NAME}        FILE        ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake)
+
+# Register the package in the user's package registry.
+# https://cmake.org/cmake/help/v3.11/command/export.html
+export(PACKAGE ${PROJECT_NAME})
