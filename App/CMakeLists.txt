@@ -31,8 +31,22 @@ endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 option(BUILD_TESTS "Build tests." OFF)
 
 ##################################################    Sources     ##################################################
-file(GLOB_RECURSE PROJECT_HEADERS include/*.h include/*.hpp)
-file(GLOB_RECURSE PROJECT_SOURCES source/*.c source/*.cpp)
+# file(GLOB_RECURSE PROJECT_HEADERS include/*.h include/*.hpp)
+# file(GLOB_RECURSE PROJECT_SOURCES source/*.c source/*.cpp)
+
+set(PROJECT_HEADERS 
+    include/${PROJECT_NAME}/PotatoApp.h
+
+    include/${PROJECT_NAME}/Editor/Editor.h
+)
+
+set(PROJECT_SOURCES 
+    source/main.cpp
+
+    source/PotatoApp.cpp
+    source/Editor/Editor.cpp
+)
+
 file(GLOB_RECURSE PROJECT_CMAKE_UTILS cmake/*.cmake)
 file(GLOB_RECURSE PROJECT_MISC *.md *.txt)
 set (PROJECT_FILES 

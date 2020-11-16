@@ -38,8 +38,31 @@ option(BUILD_SHARED_LIBS "Build shared (dynamic) libraries." OFF)
 option(BUILD_TESTS "Build tests." OFF)
 
 ##################################################    Sources     ##################################################
-file(GLOB_RECURSE PROJECT_HEADERS include/*.h include/*.hpp)
-file(GLOB_RECURSE PROJECT_SOURCES source/*.c source/*.cpp)
+# file(GLOB_RECURSE PROJECT_HEADERS include/*.h include/*.hpp)
+# file(GLOB_RECURSE PROJECT_SOURCES source/*.c source/*.cpp)
+
+set(PROJECT_HEADERS 
+    include/${PROJECT_NAME}/Collections/SortedVector.h
+
+    include/${PROJECT_NAME}/Core/Application.h
+    include/${PROJECT_NAME}/Core/Engine.h
+    include/${PROJECT_NAME}/Core/Plugin.h
+
+    include/${PROJECT_NAME}/File/File.h
+    include/${PROJECT_NAME}/File/FileSystem.h
+
+    include/${PROJECT_NAME}/Util/Assert.h
+    include/${PROJECT_NAME}/Util/Macros.h
+)
+
+set(PROJECT_SOURCES 
+    source/Core/Application.cpp
+    source/Core/Engine.cpp
+    source/Core/Plugin.cpp
+
+    source/Util/Assert.cpp
+)
+
 file(GLOB_RECURSE PROJECT_CMAKE_UTILS cmake/*.cmake)
 file(GLOB_RECURSE PROJECT_MISC *.md *.txt)
 set (PROJECT_EXPORT_HPP include/${PROJECT_NAME}/Export.h)
